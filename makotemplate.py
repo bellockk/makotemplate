@@ -15,19 +15,27 @@ def _action(target, source, env):
     try:
         template_object = Template(filename=source[0].abspath)
     except:
-        raise SCons.Errors.StopError(SCons.Warnings.Warning, "Could not load the mako template %s." % source[0].abspath)
+        raise SCons.Errors.StopError(SCons.Warnings.Warning,
+                                     "Could not load the mako "
+                                     "template %s." % source[0].abspath)
 
     try:
         rendered = template_object.render(**env['MAKO_DICTIONARY'])
     except:
-        raise SCons.Errors.StopError(SCons.Warnings.Warning, "Could not render the template %s with the following dictionary.\n%s" % (source[0].abspath, env['MAKO_DICTIONARY']))
+        raise SCons.Errors.StopError(SCons.Warnings.Warning,
+                                     "Could not render the template %s with "
+                                     "the following dictionary.\n%s"
+                                     "" % (source[0].abspath,
+                                           env['MAKO_DICTIONARY']))
 
     try:
         file_object = open(target[0].abspath, 'w')
         file_object.write(rendered)
         file_object.close()
     except:
-        raise SCons.Errors.StopError(SCons.Warnings.Warning, "Could not write the rendered template to %s." % target[0].abspath)
+        raise SCons.Errors.StopError(SCons.Warnings.Warning,
+                                     "Could not write the rendered template "
+                                     "to %s." % target[0].abspath)
 
 def generate(env):
     """
@@ -55,6 +63,8 @@ def exists(env):
         import os
         from mako.template import Template
     except ImportError:
-        raise SCons.Errors.StopError(SCons.Warnings.Warning, "Could not find mako, please ensure you have it installed on your system.")
+        raise SCons.Errors.StopError(SCons.Warnings.Warning,
+                                     "Could not find mako, please ensure you "
+                                     "have it installed on your system.")
     else:
         return True
