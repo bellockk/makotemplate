@@ -1,5 +1,6 @@
 import os,sys
 from SCons.Script import *
+from SCons.Errors import StopError
 
 SCRIPT_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -15,14 +16,14 @@ def _action(target, source, env):
     try:
         template_object = Template(filename=source[0].abspath)
     except:
-        raise SCons.Errors.StopError(SCons.Warnings.Warning,
+        raise StopError(SCons.Warnings.Warning,
                                      "Could not load the mako "
                                      "template %s." % source[0].abspath)
 
     try:
         rendered = template_object.render(**env['MAKO_DICTIONARY'])
     except:
-        raise SCons.Errors.StopError(SCons.Warnings.Warning,
+        raise StopError(SCons.Warnings.Warning,
                                      "Could not render the template %s with "
                                      "the following dictionary.\n%s"
                                      "" % (source[0].abspath,
@@ -33,7 +34,7 @@ def _action(target, source, env):
         file_object.write(rendered)
         file_object.close()
     except:
-        raise SCons.Errors.StopError(SCons.Warnings.Warning,
+        raise StopError(SCons.Warnings.Warning,
                                      "Could not write the rendered template "
                                      "to %s." % target[0].abspath)
 
@@ -63,7 +64,7 @@ def exists(env):
         import os
         from mako.template import Template
     except ImportError:
-        raise SCons.Errors.StopError(SCons.Warnings.Warning,
+        raise StopError(SCons.Warnings.Warning,
                                      "Could not find mako, please ensure you "
                                      "have it installed on your system.")
     else:
