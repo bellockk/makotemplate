@@ -9,8 +9,6 @@ def _string(target, source, env):
 
 def _action(target, source, env):
 
-    sys.path.insert(0, os.path.abspath(
-        os.path.join(SCRIPT_PATH, '..', '..', '..', '..', 'Mako')))
     from mako.template import Template
 
     try:
