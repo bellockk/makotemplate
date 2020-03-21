@@ -1,6 +1,4 @@
 import os
-import sys
-import traceback
 from SCons.Script import *
 from SCons.Errors import StopError
 
@@ -17,18 +15,14 @@ def _action(target, source, env):
     try:
         template_object = Template(filename=source[0].abspath)
     except:
-        exc_type, exc_value, exc_traceback = sys.exc_info()
-        print(''.join(traceback.format_exception(
-            exc_type, exc_value, exc_traceback)))
+        print(exceptions.text_error_template().render())
         raise SCons.Errors.StopError(
             "Could not load the mako template %s" %
                 source[0].abspath)
     try:
         rendered = template_object.render(**env['MAKO_DICTIONARY'])
     except:
-        exc_type, exc_value, exc_traceback = sys.exc_info()
-        print(''.join(traceback.format_exception(
-            exc_type, exc_value, exc_traceback)))
+        print(exceptions.text_error_template().render())
         raise SCons.Errors.StopError(
             ("Could not render the template %s "
             "with the following dictionary.\n%s") % (
@@ -38,6 +32,7 @@ def _action(target, source, env):
         file_object.write(rendered)
         file_object.close()
     except:
+        print(exceptions.text_error_template().render())
         raise SCons.Errors.StopError(
             "Could not write the rendered template to %s." % target[0].abspath)
 

@@ -1,2 +1,2 @@
-from makotemplate import generate
-from makotemplate import exists
+from .makotemplate import generate
+from .makotemplate import exists
