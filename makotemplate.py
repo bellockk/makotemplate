@@ -40,10 +40,11 @@ def generate(env):
     """
     Add builders and construction variables for the Mako builder.
     """
-    scons_action=SCons.Action.Action(_action, _string)
+    scons_action=SCons.Action.Action(
+        _action, _string, varlist=['MAKO_DICTIONARY'])
     env['BUILDERS']['Mako'] =  Builder(
-            action = scons_action,
-            target_factory = env.fs.File)
+        action = scons_action,
+        target_factory = env.fs.File)
     env.AppendUnique(MAKO_DICTIONARY={})
 
 def exists(env):
