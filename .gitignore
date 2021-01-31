@@ -1,2 +1,15 @@
-.ropeproject
 *.pyc
+*__pycache__
+dist
+_build
+.sconsign.dblite
+template.txt
+el*.xml
+win.xml
+output.xml
+log.html
+report.html
+coverage.xml
+junit.xml
+.coverage*
+local

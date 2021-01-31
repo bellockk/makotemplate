@@ -1,0 +1,10 @@
+import SCons
+
+# Add the path to the tool to the SCons tool search path
+SCons.Tool.DefaultToolpath.insert(0, Dir('../..').abspath)
+
+# Create an environment with the makotemplate tool loaded
+env = Environment(tools=['makotemplate'])
+
+# Build a template with the mako builder
+env.Mako('template.txt', 'template.txt.mako', MAKO_DICTIONARY={'FOO': 'BAR'})
